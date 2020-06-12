@@ -1,9 +1,11 @@
 ﻿namespace STPTask.Data
 {
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using STPTask.Domain;
 
-    public class STPTaskDbContext : DbContext
+    public class STPTaskDbContext : IdentityDbContext<STPUser, IdentityRole, string>
     {
         public DbSet<Office> Offices { get; set; }
 
