@@ -19,6 +19,10 @@
         [Required]
         public DateTime CreationDate { get; set; }
 
+        [Required]
+        public string OwnerId { get; set; }
+        public STPUser Owner { get; set; }
+
         public ICollection<Office> Offices { get; set; }
 
         public ICollection<Employee> Employees { get; set; }

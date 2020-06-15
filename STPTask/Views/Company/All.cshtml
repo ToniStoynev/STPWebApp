@@ -1,0 +1,35 @@
+﻿@model List<STPTask.Models.ViewModels.CompanyAllViewModel>
+
+@{
+    ViewData["Title"] = "All";
+}
+
+<div id="data-holder" class="w-75  mx-auto">
+    <h1 class="text-center">Manage Your Companies</h1>
+    <hr class="bg- hr-2" />
+    <table class="table">
+        <thead>
+            <tr class="row mx-auto">
+                <th class="col-md-3">Name</th>
+                <th class="col-md-3">CreationDate</th>
+                <th class="col-md-3">Open New Office</th>
+                <th class="col-md-3">Hire Employee</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr class="row mx-auto">
+                    <td class="col-md-3">@Model[i].Name</td>
+                    <td class="col-md-3">@Model[i].CreationDate.ToString()</td>
+                    <td class="col-md-3">
+                        <a href="/Office/Open?id=@Model[i].Id" class="btn bg-dark text-light">Open New Office</a>
+                    </td>
+                    <td class="col-md-3">
+                        <a href="/Employee/HireEmployee?id=@Model[i].Id" class="btn bg-dark text-light">Hire Employee</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
