@@ -62,7 +62,6 @@
         }
 
         [Authorize]
-        [HttpPut]
         public async Task<IActionResult> Edit(string id)
         {
             var companyServiceModel = await this.companyService.GetCompanyById(id);
