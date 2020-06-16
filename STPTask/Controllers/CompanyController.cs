@@ -62,6 +62,7 @@
         }
 
         [Authorize]
+        [HttpPut]
         public async Task<IActionResult> Edit(string id)
         {
             var companyServiceModel = await this.companyService.GetCompanyById(id);
@@ -86,9 +87,24 @@
                 CreationDate = registerCompanyInputModel.CreationDate
             };
 
-            var result = this.companyService.EditCompany(companyServiceModel);
+            var result = await this.companyService.EditCompany(companyServiceModel);
 
             return this.Redirect("/Company/All");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Delete()
+        {
+            return this.View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.companyService.DeleteCompany(id);
+
+            return RedirectToAction(nameof(All));
         }
     }
 }

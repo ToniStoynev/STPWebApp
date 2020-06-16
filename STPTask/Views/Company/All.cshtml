@@ -10,29 +10,31 @@
     <table class="table">
         <thead>
             <tr class="row mx-auto">
-                <th class="col-md-2">#</th>
                 <th class="col-md-2">Name</th>
                 <th class="col-md-2">CreationDate</th>
                 <th class="col-md-2">Open New Office</th>
                 <th class="col-md-2">Edit Company's Details</th>
-                <th class="col-md-2">Delete the company</th>
+                <th class="col-md-2">View Offices</th>
+                <th class="col-md-2">Delete company</th>
             </tr>
         </thead>
         <tbody>
             @for (int i = 0; i < Model.Count; i++)
             {
             <tr class="row mx-auto">
-                <td class="col-md-2">@(i+1)</td>
                 <td class="col-md-2">@Model[i].Name</td>
                 <td class="col-md-2">@Model[i].CreationDate.ToString()</td>
                 <td class="col-md-2">
-                    <a href="/Office/Open?id=@Model[i].Id" class="btn bg-dark text-light">Open New Office</a>
+                    <a href="/Office/Open?id=@Model[i].Id" class="btn bg-dark text-light">New Office</a>
                 </td>
                 <td class="col-md-2">
-                    <a href="/Company/Edit?id=@Model[i].Id" class="btn bg-dark text-light">Edit Company's Details</a>
+                    <a href="/Company/Edit?id=@Model[i].Id" class="btn bg-dark text-light">Edit Company</a>
                 </td>
                 <td class="col-md-2">
-                    <a href="/Company/Delete?id=@Model[i].Id" class="btn bg-dark text-light">Delete Company</a>
+                    <a href="/Office/AllOffices?id=@Model[i].Id" class="btn bg-dark text-light">View Offices</a>
+                </td>
+                <td class="col-md-2">
+                    <a href="/Company/Delete?id=@Model[i].Id" class="btn bg-dark text-light">Delete company</a>
                 </td>
             </tr>
             }

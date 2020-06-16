@@ -13,7 +13,7 @@
                 <th class="col-md-2">City</th>
                 <th class="col-md-2">Street</th>
                 <th class="col-md-2">Street Number</th>
-                <th class="col-md-2">Is Headqurter</th>
+                <th class="col-md-2">Type</th>
                 <th class="col-md-2">Hire Employee</th>
             </tr>
         </thead>
@@ -25,7 +25,14 @@
                 <td class="col-md-2">@Model[i].City</td>
                 <td class="col-md-2">@Model[i].Street</td>
                 <td class="col-md-2">@Model[i].StreetNumber</td>
-                <td class="col-md-2">@Model[i].IsHeadquarter.ToString()</td>
+                @if (Model[i].IsHeadquarter)
+                {
+                    <td class="col-md-2">Headquarter</td>
+                }
+                else
+                {
+                    <td class="col-md-2">Regular office</td>
+                }
                 <td class="col-md-2">
                     <a href="/Employee/HireEmployee?id=@Model[i].Id" class="btn bg-dark text-light">Hire Employee</a>
                 </td>

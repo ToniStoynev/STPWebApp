@@ -62,13 +62,26 @@
 
         public async Task<bool> EditCompany(EditCompanyServiceModel companyServiceModel)
         {
-            var companyFromDb = this.dbContext.Companies
-                .SingleOrDefault(company => company.Id == companyServiceModel.Id);
+            var companyFromDb = await this.dbContext.Companies
+                .SingleOrDefaultAsync(company => company.Id == companyServiceModel.Id);
 
             companyFromDb.Name = companyServiceModel.Name;
             companyFromDb.CreationDate = companyServiceModel.CreationDate;
 
            this.dbContext.Update(companyFromDb);
+
+            int result = await this.dbContext.SaveChangesAsync();
+
+            return result > 0;
+        }
+
+        public async Task<bool> DeleteCompany(string id)
+        {
+            var companyFromDb = await this.dbContext
+                .Companies
+                .FirstOrDefaultAsync(company => company.Id == id);
+
+            this.dbContext.Companies.Remove(companyFromDb);
 
             int result = await this.dbContext.SaveChangesAsync();
 

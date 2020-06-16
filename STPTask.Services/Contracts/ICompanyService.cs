@@ -13,5 +13,7 @@
         Task<CompanyServiceModel> GetCompanyById(string id);
 
         Task<bool> EditCompany(EditCompanyServiceModel companyServiceModel);
+
+        Task<bool> DeleteCompany(string id);
     }
 }
