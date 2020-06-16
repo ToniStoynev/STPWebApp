@@ -41,6 +41,7 @@
                          .Where(office => office.CompanyId == companyId)
                          .Select(office => new OfficeServiceModel
                          {
+                             Id = office.Id,
                              Country = office.Country,
                              City = office.City,
                              Street = office.Street,

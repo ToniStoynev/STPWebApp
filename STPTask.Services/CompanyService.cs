@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
     using STPTask.Data;
     using STPTask.Domain;
     using STPTask.Services.Contracts;
@@ -41,6 +42,37 @@
                            Name = company.Name,
                            CreationDate = company.CreationDate
                        });
+        }
+
+        public async Task<CompanyServiceModel> GetCompanyById(string id)
+        {
+            var companyFromDb = await this.dbContext.Companies
+                .SingleOrDefaultAsync(company => company.Id == id);
+
+           var companyServiceModel = new CompanyServiceModel
+           {
+               Id = companyFromDb.Id,
+               Name = companyFromDb.Name,
+               CreationDate = companyFromDb.CreationDate,
+               OwnerId = companyFromDb.OwnerId
+           };
+
+            return companyServiceModel;
+        }
+
+        public async Task<bool> EditCompany(EditCompanyServiceModel companyServiceModel)
+        {
+            var companyFromDb = this.dbContext.Companies
+                .SingleOrDefault(company => company.Id == companyServiceModel.Id);
+
+            companyFromDb.Name = companyServiceModel.Name;
+            companyFromDb.CreationDate = companyServiceModel.CreationDate;
+
+           this.dbContext.Update(companyFromDb);
+
+            int result = await this.dbContext.SaveChangesAsync();
+
+            return result > 0;
         }
     }
 }

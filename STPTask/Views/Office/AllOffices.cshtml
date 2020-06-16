@@ -14,6 +14,7 @@
                 <th class="col-md-2">Street</th>
                 <th class="col-md-2">Street Number</th>
                 <th class="col-md-2">Is Headqurter</th>
+                <th class="col-md-2">Hire Employee</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,9 @@
                 <td class="col-md-2">@Model[i].Street</td>
                 <td class="col-md-2">@Model[i].StreetNumber</td>
                 <td class="col-md-2">@Model[i].IsHeadquarter.ToString()</td>
+                <td class="col-md-2">
+                    <a href="/Employee/HireEmployee?id=@Model[i].Id" class="btn bg-dark text-light">Hire Employee</a>
+                </td>
             </tr>
             }
         </tbody>

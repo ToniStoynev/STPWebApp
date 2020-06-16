@@ -8,7 +8,6 @@
         public Company()
         {
             this.Offices = new HashSet<Office>();
-            this.Employees = new HashSet<Employee>();
         }
         [Required]
         public string Id { get; set; }
@@ -24,7 +23,5 @@
         public STPUser Owner { get; set; }
 
         public ICollection<Office> Offices { get; set; }
-
-        public ICollection<Employee> Employees { get; set; }
     }
 }

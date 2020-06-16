@@ -41,8 +41,8 @@
               .HasKey(employee => employee.Id);
 
             modelBuilder.Entity<Employee>()
-                .HasOne(employee => employee.Company)
-                .WithMany(company => company.Employees);
+                .HasOne(employee => employee.Office)
+                .WithMany(office => office.Employees);
 
             base.OnModelCreating(modelBuilder);
         }

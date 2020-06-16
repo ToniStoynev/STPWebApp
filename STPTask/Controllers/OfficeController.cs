@@ -51,6 +51,7 @@
                 .GetAllBOfficesByCompanyId(id)
                 .Select(office => new CompanyOfficesAllViewModel
                 {
+                    Id = office.Id,
                     Country = office.Country,
                     City = office.City,
                     Street = office.Street,

@@ -9,5 +9,9 @@
         Task<bool> RegisterCompany(CompanyServiceModel companyServiceModel);
 
         IQueryable<CompanyServiceModel> GetAllByOwnerId(string ownerId);
+
+        Task<CompanyServiceModel> GetCompanyById(string id);
+
+        Task<bool> EditCompany(EditCompanyServiceModel companyServiceModel);
     }
 }
