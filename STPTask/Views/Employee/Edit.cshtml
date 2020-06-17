@@ -1,8 +1,6 @@
-﻿@using STPTask.Models.ViewModels
-@model STPTask.Models.InputModels.EditEmployeeInputModel
+﻿@model STPTask.Models.InputModels.EditEmployeeInputModel
 @{
     ViewData["Title"] = "Hire";
-    var officesByCompany = (List<CompanyOfficesAllViewModel>)ViewData["allOfficesByCompany"];
 }
 
 <h1 class="text-center mt-3">Edit employee info</h1>
@@ -58,15 +56,6 @@
             </div>
             <input asp-for="@Model.ExperienceLevel" class="form-control" placeholder="Experience Level..." />
             <span asp-validation-for="@Model.ExperienceLevel" class="text-danger"></span>
-        </div>
-        <div class="form-group w-45">
-            <div class="d-flex justify-content-center">
-                <label asp-for="@Model.OfficeId" class="font-weight-bold"></label>
-            </div>
-            <select asp-for="@Model.OfficeId" class="form-control">
-                <option>@Model.OfficeId</option>
-            </select>
-            <span asp-validation-for="@Model.OfficeId" class="text-danger"></span>
         </div>
     </div>
     <div class="d-flex my-3 justify-content-between">

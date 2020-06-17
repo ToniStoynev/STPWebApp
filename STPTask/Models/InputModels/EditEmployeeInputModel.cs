@@ -4,8 +4,9 @@
     using STPTask.Services.Models;
     using System;
 
-    public class EditEmployeeInputModel : IMapFrom<EmployeeServiceModel>
+    public class EditEmployeeInputModel : IMapFrom<EmployeeServiceModel>, IMapTo<EmployeeServiceModel>
     {
+        public string Id { get; set; }
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
