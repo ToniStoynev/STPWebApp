@@ -5,6 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using STPTask.Data;
     using STPTask.Domain;
+    using STPTask.Mappings;
     using STPTask.Services.Contracts;
     using STPTask.Services.Models;
 
@@ -19,12 +20,7 @@
 
         public async Task<bool> RegisterCompany(CompanyServiceModel companyServiceModel)
         {
-            var company = new Company
-            {
-                Name = companyServiceModel.Name,
-                CreationDate = companyServiceModel.CreationDate,
-                OwnerId = companyServiceModel.OwnerId
-            };
+            var company = AutoMapper.Mapper.Map<Company>(companyServiceModel);
 
             this.dbContext.Companies.Add(company);
             int result = await dbContext.SaveChangesAsync();
@@ -36,12 +32,7 @@
         {
             return this.dbContext.Companies
                        .Where(company => company.OwnerId == ownerId)
-                       .Select(company => new CompanyServiceModel
-                       {
-                           Id = company.Id,
-                           Name = company.Name,
-                           CreationDate = company.CreationDate
-                       });
+                       .To<CompanyServiceModel>();
         }
 
         public async Task<CompanyServiceModel> GetCompanyById(string id)
@@ -49,13 +40,7 @@
             var companyFromDb = await this.dbContext.Companies
                 .SingleOrDefaultAsync(company => company.Id == id);
 
-           var companyServiceModel = new CompanyServiceModel
-           {
-               Id = companyFromDb.Id,
-               Name = companyFromDb.Name,
-               CreationDate = companyFromDb.CreationDate,
-               OwnerId = companyFromDb.OwnerId
-           };
+            var companyServiceModel = AutoMapper.Mapper.Map<CompanyServiceModel>(companyFromDb);
 
             return companyServiceModel;
         }
@@ -68,7 +53,7 @@
             companyFromDb.Name = companyServiceModel.Name;
             companyFromDb.CreationDate = companyServiceModel.CreationDate;
 
-           this.dbContext.Update(companyFromDb);
+            this.dbContext.Update(companyFromDb);
 
             int result = await this.dbContext.SaveChangesAsync();
 

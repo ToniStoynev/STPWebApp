@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using STPTask.Data;
     using STPTask.Domain;
+    using STPTask.Mappings;
     using STPTask.Services.Contracts;
     using STPTask.Services.Models;
 
@@ -18,15 +19,7 @@
 
         public async Task<bool> OpenNewOffice(OfficeServiceModel officeServiceModel)
         {
-            var office = new Office
-            {
-                Country = officeServiceModel.Country,
-                City = officeServiceModel.City,
-                Street = officeServiceModel.Street,
-                StreetNumber = officeServiceModel.StreetNumber,
-                IsHeadquarter = officeServiceModel.IsHeadquerter,
-                CompanyId = officeServiceModel.CompanyId
-            };
+            var office = AutoMapper.Mapper.Map<Office>(officeServiceModel);
 
             this.dbContext.Offices.Add(office);
 
@@ -39,16 +32,7 @@
         {
             return this.dbContext.Offices
                          .Where(office => office.CompanyId == companyId)
-                         .Select(office => new OfficeServiceModel
-                         {
-                             Id = office.Id,
-                             Country = office.Country,
-                             City = office.City,
-                             Street = office.Street,
-                             StreetNumber = office.StreetNumber,
-                             IsHeadquerter = office.IsHeadquarter,
-                             CompanyId = office.CompanyId
-                         });
+                         .To<OfficeServiceModel>();
         }
     }
 }

@@ -2,7 +2,6 @@
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.UI;
     using Microsoft.AspNetCore.Mvc;
@@ -12,8 +11,14 @@
     using STPTask.Data;
     using STPTask.Domain;
     using STPTask.Extensions;
+    using STPTask.Mappings;
+    using STPTask.Models.InputModels;
+    using STPTask.Models.ViewModels;
     using STPTask.Services;
     using STPTask.Services.Contracts;
+    using STPTask.Services.Models;
+    using System.Reflection;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -47,6 +52,11 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            AutoMapperConfig.RegisterMappings(
+               typeof(RegisterCompanyInputModel).GetTypeInfo().Assembly,
+               typeof(CompanyAllViewModel).GetTypeInfo().Assembly,
+               typeof(CompanyServiceModel).GetTypeInfo().Assembly);
+
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
                 using (var context = serviceScope.ServiceProvider.GetRequiredService<STPTaskDbContext>())

@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\STPTask.Data\STPTask.Data.csproj" />
+    <ProjectReference Include="..\STPTask.Mappings\STPTask.Mappings.csproj" />
   </ItemGroup>
 
 </Project>

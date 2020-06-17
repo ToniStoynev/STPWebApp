@@ -2,22 +2,28 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using STPTask.Mappings;
     using STPTask.Models.InputModels;
+    using STPTask.Models.ViewModels;
     using STPTask.Services.Contracts;
     using STPTask.Services.Models;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService employeeService;
+        private readonly IOfficeService officeService;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployeeController(IEmployeeService employeeService, IOfficeService officeService)
         {
             this.employeeService = employeeService;
+            this.officeService = officeService;
         }
 
         [Authorize]
-        public async Task<IActionResult> HireEmployee()
+        public IActionResult HireEmployee()
         {
             return View();
         }
@@ -26,20 +32,34 @@
         [HttpPost]
         public async Task<IActionResult> HireEmployee([FromQuery]string id, [FromForm]HireEmployeeInputModel hireEmployeeInputModel)
         {
-            var employeeServiceModel = new EmployeeServiceModel
-            {
-                FirstName = hireEmployeeInputModel.FirstName,
-                LastName = hireEmployeeInputModel.LastName,
-                StartingDate = hireEmployeeInputModel.StartingDate,
-                Salary = hireEmployeeInputModel.Salary,
-                ExperienceLevel = hireEmployeeInputModel.ExperienceLevel,
-                VacantionDays = hireEmployeeInputModel.VacantionDays,
-                OfficeId = id
-            };
+            var employeeServiceModel = AutoMapper.Mapper.Map<EmployeeServiceModel>(hireEmployeeInputModel);
+
+            employeeServiceModel.OfficeId = id;
 
             await this.employeeService.HireEmployee(employeeServiceModel);
 
-            return Redirect("/Office/All");
+            return Redirect($"/Employee/AllEmployees?id={id}");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> AllEmployees(string id)
+        {
+            var viewModel = await this.employeeService
+                .GetAllEmployeesByOfficeId(id)
+                .To<EmployeeAllViewModel>()
+                .ToListAsync();
+
+            return View(viewModel);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var employeeServiceModel = await this.employeeService.GetEmployeeById(id);
+
+            var editEmployeeInputModel = AutoMapper.Mapper.Map<EditEmployeeInputModel>(employeeServiceModel);
+
+            return this.View(editEmployeeInputModel);
         }
     }
 }

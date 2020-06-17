@@ -1,10 +1,10 @@
-﻿namespace STPTask.Services.Models
+﻿namespace STPTask.Models.ViewModels
 {
-    using STPTask.Domain;
     using STPTask.Mappings;
+    using STPTask.Services.Models;
     using System;
 
-    public class EmployeeServiceModel : IMapTo<Employee>, IMapFrom<Employee>
+    public class EmployeeAllViewModel : IMapFrom<EmployeeServiceModel>
     {
         public string Id { get; set; }
 
@@ -21,6 +21,5 @@
         public string ExperienceLevel { get; set; }
 
         public string OfficeId { get; set; }
-        public OfficeServiceModel Office { get; set; }
     }
 }

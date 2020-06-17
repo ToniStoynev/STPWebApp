@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using STPTask.Mappings;
     using STPTask.Models.InputModels;
     using STPTask.Models.ViewModels;
     using STPTask.Services.Contracts;
@@ -30,11 +31,7 @@
         [Authorize]
         public async Task<IActionResult> Register(RegisterCompanyInputModel inputModel)
         {
-            var companyServiceModel = new CompanyServiceModel
-            {
-                Name = inputModel.Name,
-                CreationDate = inputModel.CreationDate
-            };
+            var companyServiceModel = AutoMapper.Mapper.Map<CompanyServiceModel>(inputModel);
 
             companyServiceModel.OwnerId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
@@ -50,12 +47,7 @@
 
             List<CompanyAllViewModel> viewModel = await this.companyService
                                         .GetAllByOwnerId(ownerId)
-                                        .Select(company => new CompanyAllViewModel
-                                        {
-                                            Id = company.Id,
-                                            Name = company.Name,
-                                            CreationDate = company.CreationDate
-                                        })
+                                        .To<CompanyAllViewModel>()
                                         .ToListAsync();
 
             return this.View(viewModel);
@@ -66,11 +58,7 @@
         {
             var companyServiceModel = await this.companyService.GetCompanyById(id);
 
-            var editCompanyInputModel = new RegisterCompanyInputModel
-            {
-                Name = companyServiceModel.Name,
-                CreationDate = companyServiceModel.CreationDate
-            };
+            var editCompanyInputModel = AutoMapper.Mapper.Map<RegisterCompanyInputModel>(companyServiceModel);
 
             return this.View(editCompanyInputModel);
         }
@@ -85,6 +73,7 @@
                 Name = registerCompanyInputModel.Name,
                 CreationDate = registerCompanyInputModel.CreationDate
             };
+
 
             var result = await this.companyService.EditCompany(companyServiceModel);
 

@@ -1,6 +1,9 @@
 ﻿namespace STPTask.Services.Models
 {
-    public class OfficeServiceModel
+    using STPTask.Domain;
+    using STPTask.Mappings;
+
+    public class OfficeServiceModel : IMapTo<Office>, IMapFrom<Office>
     {
         public string Id { get; set; }
         public string Country { get; set; }
