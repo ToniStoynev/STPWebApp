@@ -19,7 +19,7 @@
         public string StreetNumber { get; set; }
 
         [Required]
-        public bool IsHeadquerter { get; set; }
+        public bool IsHeadquarter { get; set; }
 
         [Required]
         public string CompanyId { get; set; }

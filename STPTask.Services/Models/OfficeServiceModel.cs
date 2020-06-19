@@ -14,7 +14,7 @@
 
         public string StreetNumber { get; set; }
 
-        public bool IsHeadquerter { get; set; }
+        public bool IsHeadquarter { get; set; }
 
         public string CompanyId { get; set; }
 
