@@ -45,5 +45,25 @@
 
             return employeeServiceModel;
         }
+
+        public async Task<bool> EditEmployee(EmployeeServiceModel employeeServiceModel)
+        {
+            var employeeFromDb = await this.dbContext
+                .Employees
+                .FirstOrDefaultAsync(employee => employee.Id == employeeServiceModel.Id);
+
+            employeeFromDb.FirstName = employeeServiceModel.FirstName;
+            employeeFromDb.LastName = employeeServiceModel.LastName;
+            employeeFromDb.Salary = employeeServiceModel.Salary;
+            employeeFromDb.VacantionDays = employeeServiceModel.VacantionDays;
+            employeeFromDb.ExperienceLevel = employeeServiceModel.ExperienceLevel;
+
+
+            this.dbContext.Update(employeeFromDb);
+
+            int result = await this.dbContext.SaveChangesAsync();
+
+            return result > 0;
+        }
     }
 }

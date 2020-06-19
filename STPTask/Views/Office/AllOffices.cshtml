@@ -1,4 +1,4 @@
-﻿@model  List<STPTask.Models.ViewModels.CompanyOfficesAllViewModel>
+﻿@model List<STPTask.Models.ViewModels.CompanyOfficesAllViewModel>
 @{
     ViewData["Title"] = "AllOffices";
 }
@@ -20,23 +20,27 @@
         <tbody>
             @for (int i = 0; i < Model.Count; i++)
             {
-            <tr class="row mx-auto">
+                <tr class="row mx-auto">
                     <td class="col-md-2">@Model[i].Country</td>
                     <td class="col-md-2">@Model[i].City</td>
                     <td class="col-md-2">@Model[i].Street</td>
                     <td class="col-md-2">@Model[i].StreetNumber</td>
                     @if (Model[i].IsHeadquarter)
                     {
-                        <td class="col-md-2">Headquarter</td>
+                        <td class="col-md-2">
+                            <a href="/Employee/AllEmployees?id=@Model[i].Id">Headquarter</a>
+                        </td>
                     }
                     else
                     {
-                        <td class="col-md-2">Regular office</td>
+                        <td class="col-md-2">
+                            <a href="/Employee/AllEmployees?id=@Model[i].Id">Regular Office</a>
+                        </td>
                     }
                     <td class="col-md-2">
                         <a href="/Employee/HireEmployee?id=@Model[i].Id" class="btn bg-dark text-light">Hire Employee</a>
                     </td>
-            </tr>
+                </tr>
             }
         </tbody>
     </table>

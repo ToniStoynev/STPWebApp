@@ -11,5 +11,6 @@
 
         Task<EmployeeServiceModel> GetEmployeeById(string id);
 
+        Task<bool> EditEmployee(EmployeeServiceModel employeeServiceModel);
     }
 }

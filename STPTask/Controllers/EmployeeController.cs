@@ -61,5 +61,26 @@
 
             return this.View(editEmployeeInputModel);
         }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Edit([FromQuery]string id, 
+                [FromForm]EditEmployeeInputModel editEmployeeInputModel)
+        {
+            var employeeServiceModel = new EmployeeServiceModel
+            {
+                Id = id,
+                FirstName = editEmployeeInputModel.FirstName,
+                LastName = editEmployeeInputModel.LastName,
+                StartingDate = editEmployeeInputModel.StartingDate,
+                Salary = editEmployeeInputModel.Salary,
+                VacantionDays = editEmployeeInputModel.VacantionDays,
+                ExperienceLevel = editEmployeeInputModel.ExperienceLevel
+            };
+
+            await this.employeeService.EditEmployee(employeeServiceModel);
+
+            return Redirect($"/Company/All");
+        }
     }
 }
