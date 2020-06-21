@@ -1,9 +1,11 @@
 ﻿namespace STPTask.Domain
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     public class Employee
     {
+
         [Required]
         public string Id { get; set; }
 
@@ -27,6 +29,7 @@
 
         [Required]
         public string OfficeId { get; set; }
+
         public Office Office { get; set; }
     }
 }

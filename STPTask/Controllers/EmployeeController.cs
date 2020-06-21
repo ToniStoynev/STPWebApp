@@ -57,7 +57,13 @@
         {
             var employeeServiceModel = await this.employeeService.GetEmployeeById(id);
 
+            var companyId = employeeServiceModel.Office.CompanyId;
+
             var editEmployeeInputModel = AutoMapper.Mapper.Map<EditEmployeeInputModel>(employeeServiceModel);
+
+            ViewData["offices"] = this.officeService
+                .GetAllBOfficesByCompanyId(employeeServiceModel.Office.CompanyId)
+                .ToList();
 
             return this.View(editEmployeeInputModel);
         }
@@ -75,7 +81,8 @@
                 StartingDate = editEmployeeInputModel.StartingDate,
                 Salary = editEmployeeInputModel.Salary,
                 VacantionDays = editEmployeeInputModel.VacantionDays,
-                ExperienceLevel = editEmployeeInputModel.ExperienceLevel
+                ExperienceLevel = editEmployeeInputModel.ExperienceLevel,
+                OfficeId = editEmployeeInputModel.OfficeId
             };
 
             await this.employeeService.EditEmployee(employeeServiceModel);

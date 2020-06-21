@@ -16,9 +16,11 @@
     public class CompanyController : Controller
     {
         private readonly ICompanyService companyService;
-        public CompanyController(ICompanyService companyService)
+        private readonly IOfficeService officeService;
+        public CompanyController(ICompanyService companyService, IOfficeService officeService)
         {
             this.companyService = companyService;
+            this.officeService = officeService;
         }
 
         [Authorize]

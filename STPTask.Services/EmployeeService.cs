@@ -39,6 +39,7 @@
         public async Task<EmployeeServiceModel> GetEmployeeById(string id)
         {
             var employeeFromDb = await this.dbContext.Employees
+                .Include(x => x.Office)
                 .SingleOrDefaultAsync(employee => employee.Id == id);
 
             var employeeServiceModel = AutoMapper.Mapper.Map<EmployeeServiceModel>(employeeFromDb);
@@ -57,6 +58,7 @@
             employeeFromDb.Salary = employeeServiceModel.Salary;
             employeeFromDb.VacantionDays = employeeServiceModel.VacantionDays;
             employeeFromDb.ExperienceLevel = employeeServiceModel.ExperienceLevel;
+            employeeFromDb.OfficeId = employeeServiceModel.OfficeId;
 
 
             this.dbContext.Update(employeeFromDb);

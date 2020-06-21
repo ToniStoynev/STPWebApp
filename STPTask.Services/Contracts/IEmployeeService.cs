@@ -7,7 +7,7 @@
     {
         Task<bool> HireEmployee(EmployeeServiceModel employeeServiceModel);
 
-        IQueryable<EmployeeServiceModel> GetAllEmployeesByOfficeId(string id);
+       IQueryable<EmployeeServiceModel> GetAllEmployeesByOfficeId(string id);
 
         Task<EmployeeServiceModel> GetEmployeeById(string id);
 
