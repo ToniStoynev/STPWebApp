@@ -46,8 +46,6 @@
                 .To<CompanyOfficesAllViewModel>()
                 .ToListAsync();
 
-            ViewData["allOfficesByCompany"] = viewModel;
-
             return this.View(viewModel);
         }
     }

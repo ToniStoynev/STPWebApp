@@ -62,7 +62,7 @@
             var editEmployeeInputModel = AutoMapper.Mapper.Map<EditEmployeeInputModel>(employeeServiceModel);
 
             ViewData["offices"] = this.officeService
-                .GetAllBOfficesByCompanyId(employeeServiceModel.Office.CompanyId)
+                .GetAllBOfficesByCompanyId(companyId)
                 .ToList();
 
             return this.View(editEmployeeInputModel);

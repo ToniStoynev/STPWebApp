@@ -9,22 +9,19 @@
     using STPTask.Services.Contracts;
     using STPTask.Services.Models;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
     public class CompanyController : Controller
     {
         private readonly ICompanyService companyService;
-        private readonly IOfficeService officeService;
-        public CompanyController(ICompanyService companyService, IOfficeService officeService)
+        public CompanyController(ICompanyService companyService)
         {
             this.companyService = companyService;
-            this.officeService = officeService;
         }
 
         [Authorize]
-        public async Task<IActionResult> Register()
+        public IActionResult Register()
         {
             return View();
         }
@@ -76,14 +73,13 @@
                 CreationDate = registerCompanyInputModel.CreationDate
             };
 
-
             var result = await this.companyService.EditCompany(companyServiceModel);
 
             return this.Redirect("/Company/All");
         }
 
         [Authorize]
-        public async Task<IActionResult> Delete()
+        public IActionResult Delete()
         {
             return this.View();
         }
