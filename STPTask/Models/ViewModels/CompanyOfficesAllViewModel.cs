@@ -1,8 +1,8 @@
 ﻿namespace STPTask.Models.ViewModels
 {
+    using STPTask.Domain;
     using STPTask.Mappings;
-    using STPTask.Services.Models;
-    public class CompanyOfficesAllViewModel : IMapFrom<OfficeServiceModel>
+    public class CompanyOfficesAllViewModel : IMapFrom<Office>
     {
         public string Id { get; set; }
         public string Country { get; set; }

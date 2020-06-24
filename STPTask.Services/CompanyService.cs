@@ -18,9 +18,9 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<bool> RegisterCompany(CompanyServiceModel companyServiceModel)
+        public async Task<bool> RegisterCompany<TInputModel>(TInputModel inputModel)
         {
-            var company = AutoMapper.Mapper.Map<Company>(companyServiceModel);
+            var company = AutoMapper.Mapper.Map<Company>(inputModel);
 
             this.dbContext.Companies.Add(company);
             int result = await dbContext.SaveChangesAsync();
@@ -28,21 +28,21 @@
             return result > 0;
         }
 
-        public IQueryable<CompanyServiceModel> GetAllByOwnerId(string ownerId)
+        public IQueryable<TViewModel> GetAllByOwnerId<TViewModel>(string ownerId)
         {
             return this.dbContext.Companies
                        .Where(company => company.OwnerId == ownerId)
-                       .To<CompanyServiceModel>();
+                       .To<TViewModel>();
         }
 
-        public async Task<CompanyServiceModel> GetCompanyById(string id)
+        public async Task<TViewModel> GetCompanyById<TViewModel>(string id)
         {
             var companyFromDb = await this.dbContext.Companies
                 .SingleOrDefaultAsync(company => company.Id == id);
 
-            var companyServiceModel = AutoMapper.Mapper.Map<CompanyServiceModel>(companyFromDb);
+            var viewModel = AutoMapper.Mapper.Map<TViewModel>(companyFromDb);
 
-            return companyServiceModel;
+            return viewModel;
         }
 
         public async Task<bool> EditCompany(EditCompanyServiceModel companyServiceModel)

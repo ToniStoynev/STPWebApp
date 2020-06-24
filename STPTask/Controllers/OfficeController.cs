@@ -7,7 +7,6 @@
     using STPTask.Models.InputModels;
     using STPTask.Models.ViewModels;
     using STPTask.Services.Contracts;
-    using STPTask.Services.Models;
     using System.Threading.Tasks;
 
     public class OfficeController : Controller
@@ -26,14 +25,11 @@
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Open([FromQuery]string id, 
-            [FromForm]OpenOfficeInputModel openOfficeInputModel)
-        { 
-            var officeServiceModel = AutoMapper.Mapper.Map<OfficeServiceModel>(openOfficeInputModel);
+        public async Task<IActionResult> Open(string id, OpenOfficeInputModel openOfficeInputModel)
+        {
+            openOfficeInputModel.CompanyId = id;
 
-            officeServiceModel.CompanyId = id;
-
-            await this.officeService.OpenNewOffice(officeServiceModel);
+            await this.officeService.OpenNewOffice(openOfficeInputModel);
 
             return Redirect($"/Office/AllOffices?id={id}");
         }
@@ -42,8 +38,7 @@
         public async Task<IActionResult> AllOffices(string id)
         {
             var viewModel = await this.officeService
-                .GetAllBOfficesByCompanyId(id)
-                .To<CompanyOfficesAllViewModel>()
+                .GetAllBOfficesByCompanyId<CompanyOfficesAllViewModel>(id)
                 .ToListAsync();
 
             return this.View(viewModel);

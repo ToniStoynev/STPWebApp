@@ -1,10 +1,10 @@
 ﻿namespace STPTask.Models.InputModels
 {
+    using STPTask.Domain;
     using STPTask.Mappings;
-    using STPTask.Services.Models;
     using System.ComponentModel.DataAnnotations;
 
-    public class OpenOfficeInputModel : IMapTo<OfficeServiceModel>
+    public class OpenOfficeInputModel : IMapTo<Office>
     {
         [Required]
         public string Country { get; set; }

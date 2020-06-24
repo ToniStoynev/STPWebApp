@@ -5,12 +5,12 @@
     using System.Threading.Tasks;
     public interface IEmployeeService
     {
-        Task<bool> HireEmployee(EmployeeServiceModel employeeServiceModel);
+        Task<bool> HireEmployee<TInputModel>(TInputModel inputModel);
 
-       IQueryable<EmployeeServiceModel> GetAllEmployeesByOfficeId(string id);
+       IQueryable<TViewModel> GetAllEmployeesByOfficeId<TViewModel>(string id);
 
-        Task<EmployeeServiceModel> GetEmployeeById(string id);
+        Task<TViewModel> GetEmployeeById<TViewModel>(string id);
 
-        Task<bool> EditEmployee(EmployeeServiceModel employeeServiceModel);
+        Task<bool> EditEmployee(EmployeeServiceModel inputModel);
     }
 }

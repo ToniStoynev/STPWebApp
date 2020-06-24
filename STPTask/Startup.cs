@@ -55,7 +55,7 @@
             AutoMapperConfig.RegisterMappings(
                typeof(RegisterCompanyInputModel).GetTypeInfo().Assembly,
                typeof(CompanyAllViewModel).GetTypeInfo().Assembly,
-               typeof(CompanyServiceModel).GetTypeInfo().Assembly);
+               typeof(Company).GetTypeInfo().Assembly);
 
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {

@@ -30,13 +30,11 @@
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> HireEmployee([FromQuery]string id, [FromForm]HireEmployeeInputModel hireEmployeeInputModel)
+        public async Task<IActionResult> HireEmployee(string id, HireEmployeeInputModel hireEmployeeInputModel)
         {
-            var employeeServiceModel = AutoMapper.Mapper.Map<EmployeeServiceModel>(hireEmployeeInputModel);
+            hireEmployeeInputModel.OfficeId = id;
 
-            employeeServiceModel.OfficeId = id;
-
-            await this.employeeService.HireEmployee(employeeServiceModel);
+            await this.employeeService.HireEmployee(hireEmployeeInputModel);
 
             return Redirect($"/Employee/AllEmployees?id={id}");
         }
@@ -45,8 +43,7 @@
         public async Task<IActionResult> AllEmployees(string id)
         {
             var viewModel = await this.employeeService
-                .GetAllEmployeesByOfficeId(id)
-                .To<EmployeeAllViewModel>()
+                .GetAllEmployeesByOfficeId<EmployeeAllViewModel>(id)
                 .ToListAsync();
 
             return View(viewModel);
@@ -55,14 +52,14 @@
         [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
-            var employeeServiceModel = await this.employeeService.GetEmployeeById(id);
+            var employeeServiceModel = await this.employeeService.GetEmployeeById<EditEmployeeInputModel>(id);
 
             var companyId = employeeServiceModel.Office.CompanyId;
 
             var editEmployeeInputModel = AutoMapper.Mapper.Map<EditEmployeeInputModel>(employeeServiceModel);
 
             ViewData["offices"] = this.officeService
-                .GetAllBOfficesByCompanyId(companyId)
+                .GetAllBOfficesByCompanyId<CompanyOfficesAllViewModel>(companyId)
                 .ToList();
 
             return this.View(editEmployeeInputModel);

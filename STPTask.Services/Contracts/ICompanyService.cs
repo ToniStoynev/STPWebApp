@@ -6,11 +6,11 @@
 
     public interface ICompanyService
     {
-        Task<bool> RegisterCompany(CompanyServiceModel companyServiceModel);
+        Task<bool> RegisterCompany<TInputModel>(TInputModel companyServiceModel);
 
-        IQueryable<CompanyServiceModel> GetAllByOwnerId(string ownerId);
+        IQueryable<TViewModel> GetAllByOwnerId<TViewModel>(string ownerId);
 
-        Task<CompanyServiceModel> GetCompanyById(string id);
+        Task<TViewModel> GetCompanyById<TViewModel>(string id);
 
         Task<bool> EditCompany(EditCompanyServiceModel companyServiceModel);
 

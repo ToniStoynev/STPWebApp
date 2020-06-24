@@ -3,12 +3,10 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using STPTask.Mappings;
     using STPTask.Models.InputModels;
     using STPTask.Models.ViewModels;
     using STPTask.Services.Contracts;
     using STPTask.Services.Models;
-    using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -30,11 +28,9 @@
         [Authorize]
         public async Task<IActionResult> Register(RegisterCompanyInputModel inputModel)
         {
-            var companyServiceModel = AutoMapper.Mapper.Map<CompanyServiceModel>(inputModel);
+            inputModel.OwnerId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            companyServiceModel.OwnerId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-            await this.companyService.RegisterCompany(companyServiceModel);
+            await this.companyService.RegisterCompany(inputModel);
 
             return this.Redirect("/Company/All");
         }
@@ -44,9 +40,8 @@
         {
             string ownerId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            List<CompanyAllViewModel> viewModel = await this.companyService
-                                        .GetAllByOwnerId(ownerId)
-                                        .To<CompanyAllViewModel>()
+            var viewModel = await this.companyService
+                                        .GetAllByOwnerId<CompanyAllViewModel>(ownerId)
                                         .ToListAsync();
 
             return this.View(viewModel);
@@ -55,16 +50,14 @@
         [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
-            var companyServiceModel = await this.companyService.GetCompanyById(id);
+            var viewModel = await this.companyService.GetCompanyById<RegisterCompanyInputModel>(id);
 
-            var editCompanyInputModel = AutoMapper.Mapper.Map<RegisterCompanyInputModel>(companyServiceModel);
-
-            return this.View(editCompanyInputModel);
+            return this.View(viewModel);
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Edit([FromQuery]string id, [FromForm]RegisterCompanyInputModel registerCompanyInputModel)
+        public async Task<IActionResult> Edit(string id, RegisterCompanyInputModel registerCompanyInputModel)
         {
             var companyServiceModel = new EditCompanyServiceModel
             {

@@ -6,7 +6,6 @@
     using STPTask.Domain;
     using STPTask.Mappings;
     using STPTask.Services.Contracts;
-    using STPTask.Services.Models;
 
     public class OfficeService : IOfficeService
     {
@@ -17,9 +16,9 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<bool> OpenNewOffice(OfficeServiceModel officeServiceModel)
+        public async Task<bool> OpenNewOffice<TInputModel>(TInputModel inputModel)
         {
-            var office = AutoMapper.Mapper.Map<Office>(officeServiceModel);
+            var office = AutoMapper.Mapper.Map<Office>(inputModel);
 
             this.dbContext.Offices.Add(office);
 
@@ -28,11 +27,11 @@
             return result > 0;
         }
 
-        public IQueryable<OfficeServiceModel> GetAllBOfficesByCompanyId(string companyId)
+        public IQueryable<TViewModel> GetAllBOfficesByCompanyId<TViewModel>(string companyId)
         {
             return this.dbContext.Offices
                          .Where(office => office.CompanyId == companyId)
-                         .To<OfficeServiceModel>();
+                         .To<TViewModel>();
         }
     }
 }

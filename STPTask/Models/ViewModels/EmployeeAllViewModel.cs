@@ -1,10 +1,10 @@
 ﻿namespace STPTask.Models.ViewModels
 {
+    using STPTask.Domain;
     using STPTask.Mappings;
-    using STPTask.Services.Models;
     using System;
 
-    public class EmployeeAllViewModel : IMapFrom<EmployeeServiceModel>
+    public class EmployeeAllViewModel : IMapFrom<Employee>
     {
         public string Id { get; set; }
 

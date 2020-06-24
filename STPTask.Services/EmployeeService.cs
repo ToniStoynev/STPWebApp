@@ -17,9 +17,9 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<bool> HireEmployee(EmployeeServiceModel employeeServiceModel)
+        public async Task<bool> HireEmployee<TInputModel>(TInputModel inputModel)
         {
-            var employee = AutoMapper.Mapper.Map<Employee>(employeeServiceModel);
+            var employee = AutoMapper.Mapper.Map<Employee>(inputModel);
 
             this.dbContext.Employees.Add(employee);
 
@@ -28,21 +28,21 @@
             return result > 0;
         }
 
-        public IQueryable<EmployeeServiceModel> GetAllEmployeesByOfficeId(string id)
+        public IQueryable<TViewModel> GetAllEmployeesByOfficeId<TViewModel>(string id)
         {
             return this.dbContext
                         .Employees
                         .Where(employee => employee.OfficeId == id)
-                        .To<EmployeeServiceModel>();
+                        .To<TViewModel>();
         }
 
-        public async Task<EmployeeServiceModel> GetEmployeeById(string id)
+        public async Task<TViewModel> GetEmployeeById<TViewModel>(string id)
         {
             var employeeFromDb = await this.dbContext.Employees
                 .Include(x => x.Office)
                 .SingleOrDefaultAsync(employee => employee.Id == id);
 
-            var employeeServiceModel = AutoMapper.Mapper.Map<EmployeeServiceModel>(employeeFromDb);
+            var employeeServiceModel = AutoMapper.Mapper.Map<TViewModel>(employeeFromDb);
 
             return employeeServiceModel;
         }

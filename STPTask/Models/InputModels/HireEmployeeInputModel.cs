@@ -1,11 +1,11 @@
 ﻿namespace STPTask.Models.InputModels
 {
+    using STPTask.Domain;
     using STPTask.Mappings;
-    using STPTask.Services.Models;
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class HireEmployeeInputModel : IMapTo<EmployeeServiceModel>
+    public class HireEmployeeInputModel : IMapTo<Employee>
     {
         [Required]
         public string FirstName { get; set; }
@@ -26,6 +26,6 @@
         public string ExperienceLevel { get; set; }
 
         [Required]
-        public string CompanyId { get; set; }
+        public string OfficeId { get; set; }
     }
 }

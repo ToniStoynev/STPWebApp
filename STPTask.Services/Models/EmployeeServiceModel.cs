@@ -21,6 +21,5 @@
         public string ExperienceLevel { get; set; }
 
         public string OfficeId { get; set; }
-        public OfficeServiceModel Office { get; set; }
     }
 }

@@ -1,8 +1,8 @@
-﻿@using STPTask.Services.Models
+﻿@using STPTask.Models.ViewModels
 @model STPTask.Models.InputModels.EditEmployeeInputModel
 @{
     ViewData["Title"] = "Hire";
-    var offices = (List<OfficeServiceModel>)ViewData["offices"];
+    var offices = (List<CompanyOfficesAllViewModel>)ViewData["offices"];
 }
 
 <h1 class="text-center mt-3">Edit employee info</h1>

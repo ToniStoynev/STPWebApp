@@ -1,10 +1,10 @@
 ﻿namespace STPTask.Models.InputModels
 {
+    using STPTask.Domain;
     using STPTask.Mappings;
-    using STPTask.Services.Models;
     using System;
 
-    public class EditEmployeeInputModel : IMapFrom<EmployeeServiceModel>, IMapTo<EmployeeServiceModel>
+    public class EditEmployeeInputModel : IMapFrom<Employee>, IMapTo<Employee>
     {
         public string Id { get; set; }
         public string FirstName { get; set; }
@@ -20,7 +20,7 @@
         public string ExperienceLevel { get; set; }
 
         public string OfficeId { get; set; }
-        public OfficeServiceModel Office { get; set; }
+        public Office Office { get; set; }
 
     }
 }
