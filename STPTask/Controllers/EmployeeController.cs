@@ -3,11 +3,9 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using STPTask.Mappings;
     using STPTask.Models.InputModels;
     using STPTask.Models.ViewModels;
     using STPTask.Services.Contracts;
-    using STPTask.Services.Models;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -52,37 +50,22 @@
         [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
-            var employeeServiceModel = await this.employeeService.GetEmployeeById<EditEmployeeInputModel>(id);
+            var viewModel = await this.employeeService.GetEmployeeById<EditEmployeeInputModel>(id);
 
-            var companyId = employeeServiceModel.Office.CompanyId;
-
-            var editEmployeeInputModel = AutoMapper.Mapper.Map<EditEmployeeInputModel>(employeeServiceModel);
+            var companyId = viewModel.Office.CompanyId;
 
             ViewData["offices"] = this.officeService
-                .GetAllBOfficesByCompanyId<CompanyOfficesAllViewModel>(companyId)
-                .ToList();
+                                      .GetAllBOfficesByCompanyId<CompanyOfficesAllViewModel>(companyId)
+                                      .ToList();
 
-            return this.View(editEmployeeInputModel);
+            return this.View(viewModel);
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Edit([FromQuery]string id, 
-                [FromForm]EditEmployeeInputModel editEmployeeInputModel)
+        public async Task<IActionResult> Edit(string id, EditEmployeeInputModel editEmployeeInputModel)
         {
-            var employeeServiceModel = new EmployeeServiceModel
-            {
-                Id = id,
-                FirstName = editEmployeeInputModel.FirstName,
-                LastName = editEmployeeInputModel.LastName,
-                StartingDate = editEmployeeInputModel.StartingDate,
-                Salary = editEmployeeInputModel.Salary,
-                VacantionDays = editEmployeeInputModel.VacantionDays,
-                ExperienceLevel = editEmployeeInputModel.ExperienceLevel,
-                OfficeId = editEmployeeInputModel.OfficeId
-            };
-
-            await this.employeeService.EditEmployee(employeeServiceModel);
+            await this.employeeService.EditEmployee(id, editEmployeeInputModel);
 
             return Redirect($"/Company/All");
         }

@@ -6,7 +6,6 @@
 
     public class EditEmployeeInputModel : IMapFrom<Employee>, IMapTo<Employee>
     {
-        public string Id { get; set; }
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

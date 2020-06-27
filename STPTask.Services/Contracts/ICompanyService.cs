@@ -1,6 +1,5 @@
 ﻿namespace STPTask.Services.Contracts
 {
-    using STPTask.Services.Models;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -12,7 +11,7 @@
 
         Task<TViewModel> GetCompanyById<TViewModel>(string id);
 
-        Task<bool> EditCompany(EditCompanyServiceModel companyServiceModel);
+        Task<bool> EditCompany<TInputModel>(string id, TInputModel inputModel);
 
         Task<bool> DeleteCompany(string id);
     }

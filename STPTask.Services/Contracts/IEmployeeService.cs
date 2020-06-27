@@ -1,6 +1,5 @@
 ﻿namespace STPTask.Services.Contracts
 {
-    using STPTask.Services.Models;
     using System.Linq;
     using System.Threading.Tasks;
     public interface IEmployeeService
@@ -11,6 +10,6 @@
 
         Task<TViewModel> GetEmployeeById<TViewModel>(string id);
 
-        Task<bool> EditEmployee(EmployeeServiceModel inputModel);
+        Task<bool> EditEmployee<TInputModel>(string id, TInputModel inputModel);
     }
 }

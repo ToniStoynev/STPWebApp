@@ -7,7 +7,6 @@
     using STPTask.Domain;
     using STPTask.Mappings;
     using STPTask.Services.Contracts;
-    using STPTask.Services.Models;
 
     public class EmployeeService : IEmployeeService
     {
@@ -39,6 +38,7 @@
         public async Task<TViewModel> GetEmployeeById<TViewModel>(string id)
         {
             var employeeFromDb = await this.dbContext.Employees
+                .AsNoTracking()
                 .Include(x => x.Office)
                 .SingleOrDefaultAsync(employee => employee.Id == id);
 
@@ -47,21 +47,13 @@
             return employeeServiceModel;
         }
 
-        public async Task<bool> EditEmployee(EmployeeServiceModel employeeServiceModel)
+        public async Task<bool> EditEmployee<TInputModel>(string id, TInputModel inputModel)
         {
             var employeeFromDb = await this.dbContext
                 .Employees
-                .FirstOrDefaultAsync(employee => employee.Id == employeeServiceModel.Id);
+                .SingleOrDefaultAsync(employee => employee.Id == id);
 
-            employeeFromDb.FirstName = employeeServiceModel.FirstName;
-            employeeFromDb.LastName = employeeServiceModel.LastName;
-            employeeFromDb.Salary = employeeServiceModel.Salary;
-            employeeFromDb.VacantionDays = employeeServiceModel.VacantionDays;
-            employeeFromDb.ExperienceLevel = employeeServiceModel.ExperienceLevel;
-            employeeFromDb.OfficeId = employeeServiceModel.OfficeId;
-
-
-            this.dbContext.Update(employeeFromDb);
+            AutoMapper.Mapper.Map(inputModel, employeeFromDb);
 
             int result = await this.dbContext.SaveChangesAsync();
 

@@ -6,7 +6,6 @@
     using STPTask.Models.InputModels;
     using STPTask.Models.ViewModels;
     using STPTask.Services.Contracts;
-    using STPTask.Services.Models;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -59,14 +58,10 @@
         [HttpPost]
         public async Task<IActionResult> Edit(string id, RegisterCompanyInputModel registerCompanyInputModel)
         {
-            var companyServiceModel = new EditCompanyServiceModel
-            {
-                Id = id,
-                Name = registerCompanyInputModel.Name,
-                CreationDate = registerCompanyInputModel.CreationDate
-            };
+            registerCompanyInputModel.OwnerId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            var result = await this.companyService.EditCompany(companyServiceModel);
+            await this.companyService
+                .EditCompany(id, registerCompanyInputModel);
 
             return this.Redirect("/Company/All");
         }

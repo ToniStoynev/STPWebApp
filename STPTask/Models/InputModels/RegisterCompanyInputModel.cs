@@ -2,12 +2,10 @@
 {
     using STPTask.Domain;
     using STPTask.Mappings;
-    using STPTask.Services.Models;
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class RegisterCompanyInputModel : IMapTo<Company>, 
-        IMapTo<EditCompanyServiceModel>, IMapFrom<Company>
+    public class RegisterCompanyInputModel : IMapTo<Company>, IMapFrom<Company>
     {
         [Required]
         public string Name { get; set; }

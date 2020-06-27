@@ -7,7 +7,6 @@
     using STPTask.Domain;
     using STPTask.Mappings;
     using STPTask.Services.Contracts;
-    using STPTask.Services.Models;
 
     public class CompanyService : ICompanyService
     {
@@ -45,15 +44,12 @@
             return viewModel;
         }
 
-        public async Task<bool> EditCompany(EditCompanyServiceModel companyServiceModel)
+        public async Task<bool> EditCompany<TInputModel>(string id, TInputModel inputModel)
         {
             var companyFromDb = await this.dbContext.Companies
-                .SingleOrDefaultAsync(company => company.Id == companyServiceModel.Id);
+                .SingleOrDefaultAsync(company => company.Id == id);
 
-            companyFromDb.Name = companyServiceModel.Name;
-            companyFromDb.CreationDate = companyServiceModel.CreationDate;
-
-            this.dbContext.Update(companyFromDb);
+            AutoMapper.Mapper.Map(inputModel, companyFromDb);
 
             int result = await this.dbContext.SaveChangesAsync();
 

@@ -16,7 +16,6 @@
     using STPTask.Models.ViewModels;
     using STPTask.Services;
     using STPTask.Services.Contracts;
-    using STPTask.Services.Models;
     using System.Reflection;
 
     public class Startup
