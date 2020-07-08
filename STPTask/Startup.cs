@@ -41,7 +41,10 @@
 
             services.ConfigureIdentityOptions();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options => 
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddTransient<IOfficeService, OfficeService>();
