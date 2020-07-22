@@ -1,8 +1,9 @@
 ﻿namespace STPTask.Services.Contracts
 {
+    using STPTask.Services.Common;
     using System.Linq;
     using System.Threading.Tasks;
-    public interface IEmployeeService
+    public interface IEmployeeService : IService
     {
         Task<bool> HireEmployee<TInputModel>(TInputModel inputModel);
 

@@ -46,9 +46,7 @@
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddTransient<ICompanyService, CompanyService>();
-            services.AddTransient<IOfficeService, OfficeService>();
-            services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddConvetionalServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

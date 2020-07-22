@@ -1,9 +1,10 @@
 ﻿namespace STPTask.Services.Contracts
 {
+    using STPTask.Services.Common;
     using System.Linq;
     using System.Threading.Tasks;
 
-    public interface ICompanyService
+    public interface ICompanyService : IService
     {
         Task<bool> RegisterCompany<TInputModel>(TInputModel companyServiceModel);
 
